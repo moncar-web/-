@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>떡상 영상 발굴기</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --bg: #0f1014;
+  --bg-2: #15171d;
+  --panel: #1b1e26;
+  --panel-2: #222631;
+  --line: #2b303c;
+  --text: #eceef3;
+  --muted: #9097a6;
+  --accent: #ef3b36;
+  --accent-2: #ff6a3d;
+  --accent-soft: rgba(239, 59, 54, .14);
+  --good: #21c07a;
+  --warn: #f5b83d;
+  --shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+:root[data-theme="light"] {
+  --bg: #f5f6f9;
+  --bg-2: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #f0f2f6;
+  --line: #e1e4eb;
+  --text: #1a1d24;
+  --muted: #6a7282;
+  --accent-soft: rgba(239, 59, 54, .09);
+  --shadow: 0 6px 18px rgba(20,25,40,.08);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+
+/* ---------- layout ---------- */
+.app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar {
+  background: var(--bg-2); border-right: 1px solid var(--line);
+  padding: 20px 14px; display: flex; flex-direction: column; gap: 18px;
+  position: sticky; top: 0; height: 100vh;
+}
+.brand { display: flex; gap: 10px; align-items: center; padding: 0 6px; }
+.brand-logo {
+  width: 38px; height: 38px; border-radius: 10px; flex: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid; place-items: center; color: #fff;
+}
+.brand b { font-size: 18px; display: block; }
+.brand small { color: var(--muted); font-size: 11px; }
+.nav { display: flex; flex-direction: column; gap: 4px; }
+.nav button {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 11px 12px; border-radius: 10px; border: 1px solid transparent;
+  background: none; text-align: left; color: var(--muted);
+}
+.nav button:hover { background: var(--panel-2); color: var(--text); }
+.nav button.active { background: var(--accent-soft); border-color: rgba(239,59,54,.4); color: var(--text); }
+.nav button.active svg { color: var(--accent); }
+.side-spacer { flex: 1; }
+.row-toggle { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; color: var(--muted); }
+.switch { position: relative; width: 40px; height: 22px; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch span {
+  position: absolute; inset: 0; background: var(--line); border-radius: 22px; transition: .2s;
+}
+.switch span::before {
+  content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px;
+  background: #fff; border-radius: 50%; transition: .2s;
+}
+.switch input:checked + span { background: var(--accent); }
+.switch input:checked + span::before { transform: translateX(18px); }
+.quota {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+}
+.quota-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.quota-head b { color: var(--accent); }
+.bar { height: 6px; background: var(--panel-2); border-radius: 6px; margin: 10px 0 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--good); border-radius: 6px; transition: width .3s; }
+.quota small { color: var(--muted); font-size: 11px; display: block; }
+.quota .reset { color: #4d9bff; margin-top: 4px; }
+.btn-ghost {
+  width: 100%; margin-top: 10px; padding: 9px; border-radius: 9px;
+  border: 1px solid var(--line); background: var(--panel-2);
+}
+.btn-ghost:hover { border-color: var(--muted); }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 32px; border-bottom: 1px solid var(--line);
+}
+.topbar h1 { font-size: 15px; margin: 0; }
+.key-chip {
+  display: flex; align-items: center; gap: 8px; padding: 7px 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+  color: var(--muted); font-size: 12px;
+}
+.key-chip code { color: var(--text); letter-spacing: 1px; }
+.content { max-width: 1320px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+
+.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 22px; overflow-x: auto; }
+.tabs button {
+  padding: 12px 20px; background: none; border: none; color: var(--muted);
+  border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+.badge-new {
+  font-size: 9px; font-weight: 700; background: var(--accent); color: #fff;
+  padding: 1px 5px; border-radius: 4px; margin-left: 4px; vertical-align: middle;
+}
+
+.hint { color: var(--warn); font-size: 12px; margin: 0 0 10px; display: flex; gap: 6px; align-items: center; }
+.search-row { display: flex; gap: 12px; }
+.search-box {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 0 16px;
+}
+.search-box:focus-within { border-color: var(--accent); }
+.search-box svg { color: var(--muted); flex: none; }
+.search-box input { flex: 1; min-width: 0; background: none; border: none; outline: none; padding: 15px 0; font-size: 15px; }
+.btn-primary {
+  display: flex; align-items: center; gap: 8px; padding: 0 26px;
+  border: none; border-radius: 12px; color: #fff; font-weight: 700; font-size: 15px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 6px 20px rgba(239,59,54,.35); white-space: nowrap;
+}
+.btn-primary:disabled { opacity: .6; cursor: wait; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.field {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0 12px;
+}
+.field label { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.field select, .field input {
+  background: none; border: none; outline: none; padding: 12px 0; font-weight: 600;
+}
+.field select option { background: var(--panel); color: var(--text); }
+.field input[type=number] { width: 58px; }
+.field small { color: var(--muted); font-size: 11px; }
+.toggle-line { display: flex; align-items: center; gap: 10px; margin-top: 14px; color: var(--muted); font-size: 13px; }
+
+/* ---------- results ---------- */
+.section-title { font-size: 18px; margin: 34px 0 6px; }
+.sub { color: var(--muted); font-size: 13px; margin: 0 0 4px; }
+.sub em { color: var(--accent); font-style: normal; }
+.sub-2 { font-size: 12px; margin: 0 0 16px; }
+.stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+}
+.stat { padding: 20px 22px; display: flex; gap: 14px; align-items: center; }
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat-ico { width: 40px; height: 40px; border-radius: 10px; background: var(--panel-2); display: grid; place-items: center; color: var(--muted); flex: none; }
+.stat-ico.hot { color: var(--accent); background: var(--accent-soft); }
+.stat label { color: var(--muted); font-size: 12px; }
+.stat label.hot { color: var(--accent); }
+.stat b { display: block; font-size: 24px; margin-top: 2px; }
+.stat b span { font-size: 13px; color: var(--muted); font-weight: 400; }
+.stat ul { margin: 6px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 12px; }
+.stat ul li::before { content: "· "; }
+
+.result-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 22px 0 14px; flex-wrap: wrap; }
+.seg { display: flex; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+.seg button { border: none; background: none; padding: 7px 12px; border-radius: 7px; color: var(--muted); font-size: 12px; }
+.seg button.active { background: var(--panel-2); color: var(--text); font-weight: 600; }
+.btn-small { padding: 8px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); font-size: 12px; }
+.btn-small:hover { border-color: var(--muted); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  display: flex; flex-direction: column; text-decoration: none; transition: transform .15s, border-color .15s;
+}
+.card:hover { transform: translateY(-3px); border-color: rgba(239,59,54,.5); }
+.thumb { position: relative; aspect-ratio: 16 / 10; background: #000; overflow: hidden; }
+.thumb .bg { position: absolute; inset: -10%; background-size: cover; background-position: center; filter: blur(14px) brightness(.5); }
+.thumb img { position: relative; width: 100%; height: 100%; object-fit: contain; display: block; }
+.pill {
+  position: absolute; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+  background: rgba(0,0,0,.72); color: #fff; backdrop-filter: blur(4px);
+}
+.pill.rank { top: 10px; left: 10px; }
+.pill.type { top: 10px; right: 10px; background: var(--accent); }
+.pill.type.long { background: #3a66ff; }
+.pill.date { bottom: 10px; right: 10px; font-weight: 500; }
+.pill.dur { bottom: 10px; left: 10px; font-weight: 500; }
+.card-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card-title { font-weight: 700; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; }
+.card-ch { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: auto; }
+.metric { background: var(--panel-2); border-radius: 8px; padding: 7px 8px; }
+.metric small { display: block; color: var(--muted); font-size: 10px; }
+.metric b { font-size: 13px; }
+.metric.ratio b { color: var(--accent); }
+.grade { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; align-self: flex-start; }
+.g5 { background: #ef3b36; color: #fff; }
+.g4 { background: #ff7a3d; color: #fff; }
+.g3 { background: #f5b83d; color: #1a1a1a; }
+.g2 { background: var(--panel-2); color: var(--text); }
+.g1 { background: var(--panel-2); color: var(--muted); }
+
+.empty, .loading, .error {
+  text-align: center; padding: 50px 20px; color: var(--muted);
+  background: var(--panel); border: 1px dashed var(--line); border-radius: 14px;
+}
+.error { color: #ff8a80; border-color: rgba(239,59,54,.4); text-align: left; white-space: pre-wrap; }
+.spinner {
+  width: 30px; height: 30px; margin: 0 auto 12px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--accent); animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tag-cloud button {
+  border: 1px solid var(--line); background: var(--panel); padding: 7px 12px; border-radius: 999px; font-size: 13px;
+}
+.tag-cloud button:hover { border-color: var(--accent); color: var(--accent); }
+.tag-cloud button small { color: var(--muted); margin-left: 4px; }
+
+/* ---------- guide ---------- */
+.guide { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px 28px; line-height: 1.75; }
+.guide h2 { font-size: 17px; margin: 0 0 8px; }
+.guide h3 { font-size: 15px; margin: 22px 0 6px; }
+.guide ol, .guide ul { padding-left: 20px; margin: 6px 0; }
+.guide code { background: var(--panel-2); padding: 1px 6px; border-radius: 5px; }
+.guide table { border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+.guide td, .guide th { border: 1px solid var(--line); padding: 6px 12px; text-align: left; }
+
+/* ---------- modal ---------- */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; place-items: center; z-index: 50; padding: 16px; }
+.modal-bg.open { display: grid; }
+.modal { width: min(520px, 100%); background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+.modal h2 { margin: 0 0 6px; font-size: 18px; }
+.modal p { color: var(--muted); font-size: 13px; margin: 0 0 16px; line-height: 1.6; }
+.modal .add { display: flex; gap: 8px; }
+.modal .add input { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; outline: none; }
+.modal .add button { border: none; border-radius: 10px; padding: 0 16px; background: var(--accent); color: #fff; font-weight: 700; }
+.key-list { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.key-list li { display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.key-list li.on { border-color: var(--accent); }
+.key-list code { flex: 1; font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+.key-list small { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.key-list button { border: none; background: none; color: var(--muted); padding: 2px 6px; }
+.key-list button:hover { color: var(--accent); }
+.modal-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+.modal-foot label { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 12px; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--panel-2); border: 1px solid var(--line); padding: 11px 18px; border-radius: 10px;
+  opacity: 0; pointer-events: none; transition: .25s; z-index: 60; box-shadow: var(--shadow);
+}
+.toast.show { opacity: 1; transform: translateX(-50%); }
+
+.mobile-nav { display: none; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .mobile-nav { display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+  .mobile-nav button { white-space: nowrap; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); font-size: 12px; }
+  .mobile-nav button.active { border-color: var(--accent); color: var(--accent); }
+  .topbar, .content { padding-left: 16px; padding-right: 16px; }
+  .search-row { flex-direction: column; }
+  .btn-primary { justify-content: center; padding: 14px; }
+  .stats { grid-template-columns: 1fr; }
+  .stat + .stat { border-left: none; border-top: 1px solid var(--line); }
+  .field { flex: 1 1 calc(50% - 10px); }
+  .field select { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ======== SIDEBAR ======== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+      </div>
+      <div><b>떡상 발굴기</b><small>유튜브 떡상 영상 분석 도구</small></div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button data-view="search" class="active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>검색 엔진
+      </button>
+      <button data-view="saved">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>저장한 영상
+      </button>
+      <button data-view="guide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>사용 가이드 / 키 발급
+      </button>
+    </nav>
+
+    <div class="side-spacer"></div>
+
+    <div class="row-toggle">
+      <span>다크 모드</span>
+      <label class="switch"><input type="checkbox" id="themeToggle" checked><span></span></label>
+    </div>
+
+    <div class="quota">
+      <div class="quota-head"><span>API 키 사용량</span><b id="quotaPct">0%</b></div>
+      <div class="bar"><i id="quotaBar" style="width:0%"></i></div>
+      <small id="quotaText">0 / 10,000</small>
+      <small class="reset">⏱ 매일 오후 4~5시(KST) 리셋</small>
+      <button class="btn-ghost" id="openKeys">🔑 키 지갑</button>
+    </div>
+  </aside>
+
+  <!-- ======== MAIN ======== -->
+  <div class="main">
+    <header class="topbar">
+      <h1 id="viewTitle">검색 엔진</h1>
+      <button class="key-chip" id="keyChip">🔑 현재 키 <code id="keyMask">등록 안 됨</code></button>
+    </header>
+    <div class="mobile-nav" id="mnav">
+      <button data-view="search" class="active">검색 엔진</button>
+      <button data-view="saved">저장한 영상</button>
+      <button data-view="guide">가이드</button>
+      <button id="mKeys">🔑 키 지갑</button>
+      <button id="mTheme">🌓 테마</button>
+    </div>
+
+    <div class="content">
+      <!-- ===== SEARCH VIEW ===== -->
+      <section id="view-search">
+        <div class="tabs" id="tabs">
+          <button data-tab="keyword" class="active">🔍 키워드 검색엔진</button>
+          <button data-tab="trend">🔥 트렌드 키워드 발굴 <span class="badge-new">New</span></button>
+        </div>
+
+        <!-- keyword tab -->
+        <div id="tab-keyword">
+          <p class="hint">ⓘ 키워드 없이 조회하실 때는 기간 설정을 꼭 해주시면 좋습니다.</p>
+          <div class="search-row">
+            <div class="search-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="q" placeholder="키워드를 입력하세요 (예: 투자, 먹방)... (키워드 없이 기간설정만으로도 떡상영상 검색가능)">
+            </div>
+            <button class="btn-primary" id="goBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              떡상 영상 발굴
+            </button>
+          </div>
+
+          <div class="filters">
+            <div class="field">
+              <select id="subs">
+                <option value="0-">전체 구독자</option>
+                <option value="0-1000">1천 미만 (신생)</option>
+                <option value="1000-10000">1천 ~ 1만 (소형)</option>
+                <option value="10000-100000">1만 ~ 10만 (중소)</option>
+                <option value="100000-1000000">10만 ~ 100만 (중형)</option>
+                <option value="1000000-">100만 이상 (대형)</option>
+                <option value="0-100000">10만 미만 전체</option>
+              </select>
+            </div>
+            <div class="field">
+              <select id="period">
+                <option value="0">전체 기간</option>
+                <option value="1">최근 24시간</option>
+                <option value="3">최근 3일</option>
+                <option value="7">최근 7일</option>
+                <option value="14">최근 14일</option>
+                <option value="30">최근 1개월</option>
+                <option value="90">최근 3개월</option>
+                <option value="180">최근 6개월</option>
+                <option value="365">최근 1년</option>
+              </select>
+            </div>
+            <div class="field">
+              <select id="dur">
+                <option value="all">전체 길이</option>
+                <option value="shorts60">숏폼 (1분 미만)</option>
+                <option value="shorts180">숏폼 (3분 이하)</option>
+                <option value="mid">4 ~ 20분</option>
+                <option value="long">롱폼 (4분 이상)</option>
+                <option value="vlong">20분 이상</option>
+              </select>
+            </div>
+            <div class="field">
+              <select id="region">
+                <option value="KR">한국 (KR)</option>
+                <option value="">전세계 (전체)</option>
+                <option value="US">미국 (US)</option>
+                <option value="JP">일본 (JP)</option>
+                <option value="GB">영국 (GB)</option>
+                <option value="TW">대만 (TW)</option>
+                <option value="VN">베트남 (VN)</option>
+                <option value="TH">태국 (TH)</option>
+                <option value="ID">인도네시아 (ID)</option>
+                <option value="IN">인도 (IN)</option>
+                <option value="BR">브라질 (BR)</option>
+                <option value="ES">스페인 (ES)</option>
+                <option value="DE">독일 (DE)</option>
+                <option value="FR">프랑스 (FR)</option>
+              </select>
+            </div>
+            <div class="field">
+              <select id="order">
+                <option value="relevance">관련도순</option>
+                <option value="viewCount">조회수순</option>
+                <option value="date">최신순</option>
+                <option value="rating">평점순</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ratioMin">떡상 기준</label>
+              <select id="ratioMin">
+                <option value="1">구독자 대비 1배↑</option>
+                <option value="2" selected>구독자 대비 2배↑</option>
+                <option value="3">구독자 대비 3배↑</option>
+                <option value="5">구독자 대비 5배↑</option>
+                <option value="10">구독자 대비 10배↑</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="count">영상 수</label>
+              <input type="number" id="count" value="50" min="50" max="500" step="50">
+              <small>/ 500</small>
+            </div>
+          </div>
+          <div class="toggle-line">
+            <label class="switch"><input type="checkbox" id="translate" checked><span></span></label>
+            키워드 자동 번역 <small style="opacity:.7">(해외 지역 선택 시 해당 언어로 번역해서 검색)</small>
+          </div>
+        </div>
+
+        <!-- trend tab -->
+        <div id="tab-trend" hidden>
+          <p class="hint">ⓘ 선택한 국가의 '인기 급상승' 영상 200개를 분석해 자주 등장하는 키워드를 뽑아냅니다. 키워드를 누르면 바로 검색됩니다.</p>
+          <div class="filters" style="margin-top:0">
+            <div class="field">
+              <select id="trendRegion">
+                <option value="KR">한국 (KR)</option>
+                <option value="US">미국 (US)</option>
+                <option value="JP">일본 (JP)</option>
+                <option value="GB">영국 (GB)</option>
+                <option value="TW">대만 (TW)</option>
+                <option value="VN">베트남 (VN)</option>
+                <option value="IN">인도 (IN)</option>
+                <option value="BR">브라질 (BR)</option>
+              </select>
+            </div>
+            <div class="field">
+              <select id="trendCat">
+                <option value="">전체 카테고리</option>
+                <option value="10">음악</option>
+                <option value="20">게임</option>
+                <option value="22">인물/블로그</option>
+                <option value="23">코미디</option>
+                <option value="24">엔터테인먼트</option>
+                <option value="25">뉴스/정치</option>
+                <option value="26">노하우/스타일</option>
+                <option value="17">스포츠</option>
+                <option value="15">동물</option>
+                <option value="28">과학기술</option>
+              </select>
+            </div>
+            <button class="btn-primary" id="trendBtn" style="padding:12px 22px">🔥 트렌드 불러오기</button>
+          </div>
+        </div>
+
+        <div id="results"></div>
+      </section>
+
+      <!-- ===== SAVED VIEW ===== -->
+      <section id="view-saved" hidden>
+        <div class="result-bar" style="margin-top:0">
+          <p class="sub" style="margin:0">⭐ 카드의 ☆ 버튼으로 저장한 영상입니다. (이 브라우저에만 저장됩니다)</p>
+          <button class="btn-small" id="clearSaved">전체 삭제</button>
+        </div>
+        <div id="savedList"></div>
+      </section>
+
+      <!-- ===== GUIDE VIEW ===== -->
+      <section id="view-guide" hidden>
+        <div class="guide">
+          <h2>사용 가이드</h2>
+          <p>이 도구는 <b>YouTube Data API v3</b>를 직접 호출해서, 구독자 수에 비해 조회수가 비정상적으로 높은 “떡상 영상”을 찾아줍니다.
+            서버 없이 브라우저에서만 동작하며, API 키는 이 브라우저(localStorage)에만 저장됩니다.</p>
+
+          <h3>1. API 키 발급 (무료, 5분)</h3>
+          <ol>
+            <li><a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> 접속 → 상단에서 <b>새 프로젝트</b> 생성</li>
+            <li>왼쪽 메뉴 <b>API 및 서비스 → 라이브러리</b> → “YouTube Data API v3” 검색 → <b>사용</b></li>
+            <li><b>API 및 서비스 → 사용자 인증 정보 → 사용자 인증 정보 만들기 → API 키</b></li>
+            <li>생성된 키(<code>AIza...</code>)를 복사해서 오른쪽 위 <b>🔑 현재 키</b> 또는 <b>키 지갑</b>에 붙여넣기</li>
+            <li>(권장) 키 제한 → “API 제한사항”에서 YouTube Data API v3만 허용</li>
+          </ol>
+
+          <h3>2. 할당량(쿼터)</h3>
+          <p>키 1개당 하루 <b>10,000 유닛</b>이 무료입니다. 태평양 시간 자정(한국 시간 오후 4시, 서머타임 해제 시 오후 5시)에 초기화됩니다.</p>
+          <table>
+            <tr><th>작업</th><th>소모 유닛</th></tr>
+            <tr><td>검색 50개</td><td>약 102 (검색 100 + 영상정보 1 + 채널정보 1)</td></tr>
+            <tr><td>검색 500개</td><td>약 1,020</td></tr>
+            <tr><td>트렌드 키워드 발굴</td><td>약 4</td></tr>
+          </table>
+          <p>키 지갑에 키를 여러 개 넣어두면, 하나가 소진됐을 때 <b>자동으로 다음 키로 전환</b>합니다.</p>
+
+          <h3>3. 떡상 지수 계산 방식</h3>
+          <ul>
+            <li><b>떡상 지수</b> = 조회수 ÷ 구독자 수 (예: 구독자 1만 명 채널 영상이 30만 회 → 30배)</li>
+            <li>결과는 기본적으로 떡상 지수가 높은 순으로 정렬됩니다.</li>
+            <li>구독자 수 조건·길이 조건에 맞지 않는 영상, 라이브/예정 방송, 구독자 수 비공개 채널은 자동 제외됩니다.</li>
+            <li>“떡상 기준”보다 지수가 낮은 영상은 ‘떡상 영상’ 수에는 포함되지 않지만, 결과 목록 아래쪽 “기준 미달”에서 볼 수 있습니다.</li>
+          </ul>
+          <table>
+            <tr><th>등급</th><th>떡상 지수</th></tr>
+            <tr><td><span class="grade g5">초대박</span></td><td>20배 이상</td></tr>
+            <tr><td><span class="grade g4">대박</span></td><td>10배 이상</td></tr>
+            <tr><td><span class="grade g3">떡상</span></td><td>3배 이상</td></tr>
+            <tr><td><span class="grade g2">양호</span></td><td>1배 이상</td></tr>
+            <tr><td><span class="grade g1">보통</span></td><td>1배 미만</td></tr>
+          </table>
+
+          <h3>4. 팁</h3>
+          <ul>
+            <li>키워드 없이 <b>기간 + 구독자 조건</b>만으로 검색하면 해당 기간 전체에서 떡상한 영상을 찾을 수 있습니다.</li>
+            <li>‘1천~1만(소형)’ + ‘최근 7일’ + ‘숏폼’ 조합이 신규 채널 벤치마킹에 가장 유용합니다.</li>
+            <li>결과는 CSV로 내려받아 엑셀에서 정리할 수 있습니다.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ======== KEY MODAL ======== -->
+<div class="modal-bg" id="keyModal">
+  <div class="modal">
+    <h2>🔑 키 지갑</h2>
+    <p>YouTube Data API v3 키를 등록하세요. 키는 이 브라우저에만 저장되며 어디로도 전송되지 않습니다(구글 API 호출에만 사용).
+      발급 방법은 <a href="#" id="toGuide">사용 가이드</a>를 참고하세요.</p>
+    <div class="add">
+      <input id="newKey" placeholder="AIza로 시작하는 API 키 붙여넣기" autocomplete="off">
+      <button id="addKey">추가</button>
+    </div>
+    <ul class="key-list" id="keyList"></ul>
+    <div class="modal-foot">
+      <label><input type="checkbox" id="autoRotate" checked> 할당량 소진 시 다음 키로 자동 전환</label>
+      <button class="btn-small" id="closeKeys">닫기</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+"use strict";
+
+/* ================= storage helpers ================= */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("tu_" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("tu_" + k, JSON.stringify(v)); } catch {} }
+};
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+/* ================= theme ================= */
+function applyTheme(dark) {
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  $("#themeToggle").checked = dark;
+  store.set("dark", dark);
+}
+applyTheme(store.get("dark", true));
+$("#themeToggle").addEventListener("change", e => applyTheme(e.target.checked));
+$("#mTheme").addEventListener("click", () => applyTheme(document.documentElement.dataset.theme !== "dark"));
+
+/* ================= API keys & quota ================= */
+// Quota resets at midnight America/Los_Angeles.
+function quotaDay() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
+}
+let keys = store.get("keys", []);          // [{key, used, day, dead}]
+let activeIdx = store.get("activeIdx", 0);
+
+function normalizeKeys() {
+  const day = quotaDay();
+  keys.forEach(k => { if (k.day !== day) { k.day = day; k.used = 0; k.dead = false; } });
+  if (activeIdx >= keys.length) activeIdx = 0;
+  store.set("keys", keys); store.set("activeIdx", activeIdx);
+}
+const mask = k => k.length > 10 ? k.slice(0, 6) + "•".repeat(10) + k.slice(-4) : "•".repeat(k.length);
+
+function renderKeys() {
+  normalizeKeys();
+  const cur = keys[activeIdx];
+  $("#keyMask").textContent = cur ? mask(cur.key) : "등록 안 됨";
+  const used = cur ? cur.used : 0;
+  const pct = Math.min(100, used / 100);
+  $("#quotaPct").textContent = (Math.round(pct * 10) / 10) + "%";
+  $("#quotaBar").style.width = pct + "%";
+  $("#quotaBar").style.background = pct > 85 ? "var(--accent)" : pct > 60 ? "var(--warn)" : "var(--good)";
+  $("#quotaText").textContent = `${used.toLocaleString()} / 10,000` + (keys.length > 1 ? ` · 키 ${keys.length}개` : "");
+  $("#keyList").innerHTML = keys.length ? keys.map((k, i) => `
+    <li class="${i === activeIdx ? "on" : ""}">
+      <code>${esc(mask(k.key))}</code>
+      <small>${k.dead ? "⛔ 소진" : k.used.toLocaleString() + " 사용"}</small>
+      ${i === activeIdx ? '<small style="color:var(--accent)">사용 중</small>' : `<button data-use="${i}">사용</button>`}
+      <button data-del="${i}" title="삭제">✕</button>
+    </li>`).join("") : '<li style="justify-content:center;color:var(--muted)">등록된 키가 없습니다</li>';
+}
+function openKeys() { renderKeys(); $("#keyModal").classList.add("open"); setTimeout(() => $("#newKey").focus(), 50); }
+$("#openKeys").onclick = openKeys; $("#keyChip").onclick = openKeys; $("#mKeys").onclick = openKeys;
+$("#closeKeys").onclick = () => $("#keyModal").classList.remove("open");
+$("#keyModal").addEventListener("click", e => { if (e.target.id === "keyModal") e.target.classList.remove("open"); });
+$("#toGuide").onclick = e => { e.preventDefault(); $("#keyModal").classList.remove("open"); showView("guide"); };
+$("#autoRotate").checked = store.get("autoRotate", true);
+$("#autoRotate").onchange = e => store.set("autoRotate", e.target.checked);
+
+function addKey() {
+  const v = $("#newKey").value.trim();
+  if (!v) return;
+  if (keys.some(k => k.key === v)) return toast("이미 등록된 키입니다");
+  keys.push({ key: v, used: 0, day: quotaDay(), dead: false });
+  activeIdx = keys.length - 1;
+  $("#newKey").value = "";
+  store.set("keys", keys); store.set("activeIdx", activeIdx);
+  renderKeys(); toast("키가 등록되었습니다");
+}
+$("#addKey").onclick = addKey;
+$("#newKey").addEventListener("keydown", e => { if (e.key === "Enter") addKey(); });
+$("#keyList").addEventListener("click", e => {
+  const u = e.target.dataset.use, d = e.target.dataset.del;
+  if (u != null) { activeIdx = +u; }
+  if (d != null && confirm("이 키를 삭제할까요?")) { keys.splice(+d, 1); if (activeIdx >= +d && activeIdx > 0) activeIdx--; }
+  store.set("keys", keys); store.set("activeIdx", activeIdx); renderKeys();
+});
+renderKeys();
+
+/* ================= YouTube API ================= */
+const COST = { search: 100, videos: 1, channels: 1 };
+
+async function yt(endpoint, params) {
+  normalizeKeys();
+  if (!keys.length) { openKeys(); throw new Error("API 키를 먼저 등록해주세요. (오른쪽 위 🔑 현재 키)"); }
+  for (let attempt = 0; attempt < keys.length; attempt++) {
+    const k = keys[activeIdx];
+    const url = new URL("https://www.googleapis.com/youtube/v3/" + endpoint);
+    Object.entries(params).forEach(([a, b]) => { if (b !== "" && b != null) url.searchParams.set(a, b); });
+    url.searchParams.set("key", k.key);
+    const res = await fetch(url);
+    const data = await res.json().catch(() => ({}));
+    k.used += COST[endpoint] || 1;
+    if (res.ok) { store.set("keys", keys); renderKeys(); return data; }
+    const reason = data?.error?.errors?.[0]?.reason || "";
+    const msg = data?.error?.message || res.statusText;
+    if ((reason === "quotaExceeded" || reason === "dailyLimitExceeded") ) {
+      k.dead = true; k.used = Math.max(k.used, 10000);
+      const next = keys.findIndex(x => !x.dead);
+      store.set("keys", keys);
+      if (next >= 0 && $("#autoRotate").checked) { activeIdx = next; store.set("activeIdx", activeIdx); renderKeys(); toast("할당량 소진 → 다음 키로 전환합니다"); continue; }
+      renderKeys();
+      throw new Error("오늘 API 할당량을 모두 사용했습니다. 한국 시간 오후 4~5시에 초기화되며, 키 지갑에 다른 키를 추가하면 바로 계속 쓸 수 있습니다.");
+    }
+    store.set("keys", keys); renderKeys();
+    if (reason === "keyInvalid" || /API key not valid/i.test(msg)) throw new Error("API 키가 올바르지 않습니다. 키를 다시 확인해주세요.");
+    if (reason === "accessNotConfigured" || /has not been used|disabled/i.test(msg)) throw new Error("이 키의 프로젝트에서 'YouTube Data API v3'가 사용 설정되지 않았습니다.\nGoogle Cloud Console → API 라이브러리에서 사용 설정 후 몇 분 뒤 다시 시도하세요.");
+    throw new Error(`YouTube API 오류 (${res.status}): ${msg}`);
+  }
+  throw new Error("사용 가능한 API 키가 없습니다.");
+}
+
+const chunk = (arr, n) => { const out = []; for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n)); return out; };
+
+function parseDur(iso) {
+  const m = /P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(iso || "") || [];
+  return (+m[1] || 0) * 86400 + (+m[2] || 0) * 3600 + (+m[3] || 0) * 60 + (+m[4] || 0);
+}
+const fmtDur = s => { const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60; return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(ss).padStart(2, "0"); };
+function fmtNum(n) {
+  if (n >= 1e8) return (n / 1e8).toFixed(n >= 1e9 ? 0 : 1).replace(/\.0$/, "") + "억";
+  if (n >= 1e4) return (n / 1e4).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, "") + "만";
+  if (n >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, "") + "천";
+  return String(n);
+}
+const fmtDate = d => { const x = new Date(d); return `${x.getFullYear()}. ${x.getMonth() + 1}. ${x.getDate()}.`; };
+function grade(r) {
+  if (r >= 20) return ["초대박", "g5"];
+  if (r >= 10) return ["대박", "g4"];
+  if (r >= 3) return ["떡상", "g3"];
+  if (r >= 1) return ["양호", "g2"];
+  return ["보통", "g1"];
+}
+
+const REGION_LANG = { KR: "ko", US: "en", GB: "en", JP: "ja", TW: "zh-TW", VN: "vi", TH: "th", ID: "id", IN: "hi", BR: "pt", ES: "es", DE: "de", FR: "fr" };
+
+async function translate(text, target) {
+  try {
+    const u = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(target)}&dt=t&q=${encodeURIComponent(text)}`;
+    const r = await fetch(u);
+    if (!r.ok) return text;
+    const d = await r.json();
+    return (d[0] || []).map(x => x[0]).join("") || text;
+  } catch { return text; }
+}
+
+const DUR_RULES = {
+  all:       { api: "",       test: () => true },
+  shorts60:  { api: "short",  test: s => s > 0 && s <= 60 },
+  shorts180: { api: "short",  test: s => s > 0 && s <= 180 },
+  mid:       { api: "medium", test: s => s >= 240 && s <= 1200 },
+  long:      { api: "",       test: s => s >= 240 },
+  vlong:     { api: "long",   test: s => s > 1200 },
+};
+
+/* ================= search ================= */
+let lastResult = null;
+let resultSort = "ratio";
+let saved = store.get("saved", []);
+
+async function runSearch() {
+  const btn = $("#goBtn");
+  let q = $("#q").value.trim();
+  const [minS, maxS] = $("#subs").value.split("-").map(x => x === "" ? Infinity : +x);
+  const days = +$("#period").value;
+  const durKey = $("#dur").value;
+  const region = $("#region").value;
+  const order = $("#order").value;
+  const ratioMin = +$("#ratioMin").value;
+  const want = Math.max(50, Math.min(500, Math.round((+$("#count").value || 50) / 50) * 50));
+  $("#count").value = want;
+
+  if (!q && !days) toast("키워드가 없으면 기간을 설정하는 것을 추천합니다");
+
+  btn.disabled = true;
+  const out = $("#results");
+  const setLoading = t => out.innerHTML = `<h2 class="section-title">검색 결과</h2><div class="loading"><div class="spinner"></div>${esc(t)}</div>`;
+
+  try {
+    let searchQ = q;
+    if (q && region && region !== "KR" && $("#translate").checked) {
+      setLoading("키워드 번역 중...");
+      searchQ = await translate(q, REGION_LANG[region] || "en");
+    }
+
+    const base = {
+      part: "snippet", type: "video", maxResults: 50, order,
+      q: searchQ, regionCode: region,
+      relevanceLanguage: region ? (REGION_LANG[region] || "").split("-")[0] : "",
+      videoDuration: DUR_RULES[durKey].api,
+      publishedAfter: days ? new Date(Date.now() - days * 864e5).toISOString() : "",
+    };
+
+    // 1) search.list with paging
+    const ids = []; let token = "";
+    while (ids.length < want) {
+      setLoading(`영상 수집 중... (${ids.length} / ${want})`);
+      const r = await yt("search", { ...base, pageToken: token });
+      (r.items || []).forEach(it => { const id = it.id?.videoId; if (id && !ids.includes(id)) ids.push(id); });
+      token = r.nextPageToken;
+      if (!token || !(r.items || []).length) break;
+    }
+    if (!ids.length) { lastResult = null; out.innerHTML = `<h2 class="section-title">검색 결과</h2><div class="empty">검색된 영상이 없습니다. 키워드나 조건을 바꿔보세요.</div>`; return; }
+
+    // 2) videos.list
+    setLoading(`영상 ${ids.length}개 상세 정보 분석 중...`);
+    const videos = [];
+    for (const c of chunk(ids, 50)) {
+      const r = await yt("videos", { part: "snippet,statistics,contentDetails,liveStreamingDetails", id: c.join(","), maxResults: 50 });
+      videos.push(...(r.items || []));
+    }
+
+    // 3) channels.list
+    setLoading("채널 구독자 수 분석 중...");
+    const chIds = [...new Set(videos.map(v => v.snippet.channelId))];
+    const channels = {};
+    for (const c of chunk(chIds, 50)) {
+      const r = await yt("channels", { part: "statistics,snippet", id: c.join(","), maxResults: 50 });
+      (r.items || []).forEach(ch => channels[ch.id] = ch);
+    }
+
+    // 4) filter + score
+    const f = { live: 0, subs: 0, len: 0, hidden: 0 };
+    const rows = [];
+    for (const v of videos) {
+      const sn = v.snippet;
+      if (v.liveStreamingDetails || (sn.liveBroadcastContent && sn.liveBroadcastContent !== "none")) { f.live++; continue; }
+      const ch = channels[sn.channelId];
+      if (!ch || ch.statistics.hiddenSubscriberCount) { f.hidden++; continue; }
+      const subs = +ch.statistics.subscriberCount || 0;
+      if (subs < minS || subs >= maxS) { f.subs++; continue; }
+      const sec = parseDur(v.contentDetails?.duration);
+      if (!DUR_RULES[durKey].test(sec)) { f.len++; continue; }
+      const views = +v.statistics.viewCount || 0;
+      const ratio = views / Math.max(subs, 1);
+      const th = sn.thumbnails || {};
+      rows.push({
+        id: v.id, title: sn.title, channel: sn.channelTitle, channelId: sn.channelId,
+        published: sn.publishedAt, thumb: (th.maxres || th.high || th.medium || th.default || {}).url,
+        views, subs, ratio, sec, shorts: sec > 0 && sec <= 180,
+        likes: +v.statistics.likeCount || 0, comments: +v.statistics.commentCount || 0,
+        chVideos: +ch.statistics.videoCount || 0,
+      });
+    }
+    lastResult = { q, searchQ, total: videos.length, rows, f, ratioMin };
+    renderResults();
+  } catch (err) {
+    out.innerHTML = `<h2 class="section-title">검색 결과</h2><div class="error">⚠ ${esc(err.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function sortRows(rows) {
+  const by = {
+    ratio: (a, b) => b.ratio - a.ratio,
+    views: (a, b) => b.views - a.views,
+    date: (a, b) => new Date(b.published) - new Date(a.published),
+    engage: (a, b) => (b.likes + b.comments) / Math.max(b.views, 1) - (a.likes + a.comments) / Math.max(a.views, 1),
+  }[resultSort];
+  return [...rows].sort(by);
+}
+
+function cardHTML(r, i) {
+  const [g, gc] = grade(r.ratio);
+  const isSaved = saved.some(s => s.id === r.id);
+  const url = r.shorts ? `https://www.youtube.com/shorts/${r.id}` : `https://www.youtube.com/watch?v=${r.id}`;
+  const ratioTxt = r.ratio >= 100 ? Math.round(r.ratio) : r.ratio.toFixed(1);
+  return `
+  <a class="card" href="${url}" target="_blank" rel="noopener">
+    <div class="thumb">
+      <div class="bg" style="background-image:url('${esc(r.thumb)}')"></div>
+      <img src="${esc(r.thumb)}" alt="" loading="lazy">
+      ${i != null ? `<span class="pill rank">#${i + 1}</span>` : ""}
+      <span class="pill type ${r.shorts ? "" : "long"}">${r.shorts ? "⚡ 쇼츠" : "▶ 롱폼"}</span>
+      <span class="pill dur">${fmtDur(r.sec)}</span>
+      <span class="pill date">🕒 ${fmtDate(r.published)}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">${esc(r.title)}</div>
+      <div class="card-ch">${esc(r.channel)} · 구독자 ${fmtNum(r.subs)}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="grade ${gc}">${g}</span>
+        <button class="btn-small" data-save="${r.id}" style="padding:3px 9px">${isSaved ? "★ 저장됨" : "☆ 저장"}</button>
+      </div>
+      <div class="metrics">
+        <div class="metric"><small>조회수</small><b>${fmtNum(r.views)}</b></div>
+        <div class="metric"><small>구독자</small><b>${fmtNum(r.subs)}</b></div>
+        <div class="metric ratio"><small>떡상 지수</small><b>${ratioTxt}배</b></div>
+      </div>
+    </div>
+  </a>`;
+}
+
+function renderResults() {
+  const R = lastResult; if (!R) return;
+  const hot = sortRows(R.rows.filter(r => r.ratio >= R.ratioMin));
+  const rest = sortRows(R.rows.filter(r => r.ratio < R.ratioMin));
+  const filtered = R.f.live + R.f.subs + R.f.len + R.f.hidden;
+  const sortBtn = (k, t) => `<button data-sort="${k}" class="${resultSort === k ? "active" : ""}">${t}</button>`;
+
+  $("#results").innerHTML = `
+    <h2 class="section-title">검색 결과 ${R.q ? `<small style="color:var(--muted);font-weight:400;font-size:13px">“${esc(R.q)}”${R.searchQ !== R.q ? ` → “${esc(R.searchQ)}”` : ""}</small>` : ""}</h2>
+    <p class="sub">총 수집된 영상중 떡상영상만 추출됩니다. <em>(라이브 방송 자동 제외됨)</em></p>
+    <p class="sub sub-2">* 영상 순서는 구독자수 대비 성과 지표(떡상 지수 = 조회수 ÷ 구독자수)가 좋은 순으로 나열됩니다.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M7 4v5M12 4v5M17 4v5"/></svg></div>
+        <div><label>수집된 일반 영상</label><b>${R.total}</b></div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico hot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div>
+        <div><label class="hot">떡상 영상 발견 (${R.ratioMin}배↑)</label><b>${hot.length} <span>개</span></b></div>
+      </div>
+      <div class="stat">
+        <div><label>필터링됨</label> <b style="display:inline;font-size:16px;margin-left:4px">${filtered} <span>개</span></b>
+          <ul>
+            <li>구독자 조건: ${R.f.subs}개</li>
+            <li>길이 필터: ${R.f.len}개</li>
+            <li>라이브 방송: ${R.f.live}개</li>
+            ${R.f.hidden ? `<li>구독자 비공개: ${R.f.hidden}개</li>` : ""}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="result-bar">
+      <div class="seg" id="sortSeg">${sortBtn("ratio", "떡상 지수순")}${sortBtn("views", "조회수순")}${sortBtn("date", "최신순")}${sortBtn("engage", "참여율순")}</div>
+      <button class="btn-small" id="csvBtn">⬇ CSV 내보내기</button>
+    </div>
+    ${hot.length ? `<div class="grid">${hot.map(cardHTML).join("")}</div>`
+      : `<div class="empty">떡상 기준(${R.ratioMin}배)을 넘는 영상이 없습니다. 기준을 낮추거나 조건을 바꿔보세요.</div>`}
+    ${rest.length ? `
+      <details style="margin-top:26px">
+        <summary style="cursor:pointer;color:var(--muted)">기준 미달 영상 ${rest.length}개 보기</summary>
+        <div class="grid" style="margin-top:14px">${rest.map(r => cardHTML(r)).join("")}</div>
+      </details>` : ""}
+  `;
+}
+
+$("#results").addEventListener("click", e => {
+  const s = e.target.closest("[data-sort]");
+  if (s) { resultSort = s.dataset.sort; renderResults(); return; }
+  if (e.target.id === "csvBtn") return exportCSV();
+  const sv = e.target.closest("[data-save]");
+  if (sv) { e.preventDefault(); toggleSave(sv.dataset.save, sv); }
+});
+$("#savedList").addEventListener("click", e => {
+  const sv = e.target.closest("[data-save]");
+  if (sv) { e.preventDefault(); toggleSave(sv.dataset.save, sv); renderSaved(); }
+});
+
+function toggleSave(id, btn) {
+  const i = saved.findIndex(s => s.id === id);
+  if (i >= 0) { saved.splice(i, 1); btn.textContent = "☆ 저장"; }
+  else {
+    const r = lastResult?.rows.find(x => x.id === id);
+    if (r) { saved.unshift({ ...r, savedAt: Date.now() }); btn.textContent = "★ 저장됨"; toast("저장했습니다"); }
+  }
+  store.set("saved", saved);
+}
+function renderSaved() {
+  $("#savedList").innerHTML = saved.length
+    ? `<div class="grid">${saved.map(r => cardHTML(r)).join("")}</div>`
+    : `<div class="empty">저장한 영상이 없습니다.</div>`;
+}
+$("#clearSaved").onclick = () => { if (saved.length && confirm("저장한 영상을 모두 삭제할까요?")) { saved = []; store.set("saved", saved); renderSaved(); } };
+
+function exportCSV() {
+  const R = lastResult; if (!R) return;
+  const head = ["순위", "제목", "채널", "구독자", "조회수", "떡상지수", "좋아요", "댓글", "길이(초)", "업로드일", "URL"];
+  const lines = sortRows(R.rows).map((r, i) => [i + 1, r.title, r.channel, r.subs, r.views, r.ratio.toFixed(2), r.likes, r.comments, r.sec,
+    r.published.slice(0, 10), `https://youtu.be/${r.id}`].map(x => `"${String(x).replace(/"/g, '""')}"`).join(","));
+  const blob = new Blob(["﻿" + [head.join(","), ...lines].join("\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `떡상영상_${(R.q || "전체").replace(/[\\/:*?"<>|]/g, "")}_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+$("#goBtn").onclick = runSearch;
+$("#q").addEventListener("keydown", e => { if (e.key === "Enter" && !e.isComposing) runSearch(); });
+
+/* ================= trend keywords ================= */
+const STOP = new Set("the a an and or of to in on for with is are was be it this that my your our you i we me at by from as how what why when who vs ft feat official video mv shorts short full ep live new 더 수 것 이 그 저 및 등 를 을 가 는 은 의 에 와 과 도 로 으로 에서 하는 합니다 있는 없는 진짜 정말 오늘 지금 ㅋㅋ ㅋㅋㅋ".split(" "));
+
+async function runTrend() {
+  const btn = $("#trendBtn"); btn.disabled = true;
+  const out = $("#results");
+  out.innerHTML = `<h2 class="section-title">트렌드 키워드</h2><div class="loading"><div class="spinner"></div>인기 급상승 영상 분석 중...</div>`;
+  try {
+    const region = $("#trendRegion").value, cat = $("#trendCat").value;
+    const items = []; let token = "";
+    for (let p = 0; p < 4; p++) {
+      const r = await yt("videos", { part: "snippet,statistics,contentDetails", chart: "mostPopular", regionCode: region, videoCategoryId: cat, maxResults: 50, pageToken: token });
+      items.push(...(r.items || []));
+      token = r.nextPageToken; if (!token) break;
+    }
+    if (!items.length) throw new Error("해당 조건의 인기 영상이 없습니다.");
+    const score = new Map();
+    const add = (w, v) => {
+      w = w.toLowerCase().replace(/^[#\s]+|[\s.,!?'"“”‘’()[\]{}|:~…-]+$/g, "").trim();
+      if (w.length < 2 || STOP.has(w) || /^\d+$/.test(w)) return;
+      const s = score.get(w) || { n: 0, views: 0 }; s.n++; s.views += v; score.set(w, s);
+    };
+    items.forEach(v => {
+      const views = +v.statistics.viewCount || 0;
+      const words = new Set();
+      (v.snippet.tags || []).slice(0, 15).forEach(t => words.add(t));
+      (v.snippet.title.match(/#[^\s#]+/g) || []).forEach(t => words.add(t));
+      v.snippet.title.replace(/#[^\s#]+/g, "").split(/[\s/|,·\[\]()【】「」]+/).forEach(t => words.add(t));
+      words.forEach(w => add(w, views));
+    });
+    const top = [...score.entries()].filter(([, s]) => s.n >= 2).sort((a, b) => b[1].n - a[1].n || b[1].views - a[1].views).slice(0, 60);
+
+    lastResult = null;
+    out.innerHTML = `
+      <h2 class="section-title">트렌드 키워드 <small style="color:var(--muted);font-weight:400;font-size:13px">${esc(region)} 인기 급상승 ${items.length}개 분석</small></h2>
+      <p class="sub sub-2">키워드를 클릭하면 해당 키워드로 최근 7일 떡상 영상을 바로 검색합니다. (괄호 = 등장 영상 수)</p>
+      <div class="tag-cloud">${top.map(([w, s]) => `<button data-kw="${esc(w)}">${esc(w)}<small>(${s.n})</small></button>`).join("") || '<span class="sub">추출된 키워드가 없습니다.</span>'}</div>
+      <h2 class="section-title" style="font-size:15px">인기 급상승 영상</h2>
+      <div class="grid">${items.slice(0, 24).map((v, i) => {
+        const th = v.snippet.thumbnails || {}; const sec = parseDur(v.contentDetails?.duration);
+        return cardHTML({ id: v.id, title: v.snippet.title, channel: v.snippet.channelTitle, published: v.snippet.publishedAt,
+          thumb: (th.high || th.medium || th.default || {}).url, views: +v.statistics.viewCount || 0, subs: 0, ratio: 0, sec, shorts: sec > 0 && sec <= 180 }, i)
+          .replace(/<div class="metrics">[\s\S]*?<\/div>\s*<\/div>\s*<\/a>$/, `<div class="metrics"><div class="metric" style="grid-column:span 3"><small>조회수</small><b>${fmtNum(+v.statistics.viewCount || 0)}</b></div></div></div></a>`)
+          .replace(/<span class="grade[^>]*>[^<]*<\/span>/, "<span></span>")
+          .replace(/<button class="btn-small" data-save[^>]*>[^<]*<\/button>/, "")
+          .replace(/ · 구독자 0/, "");
+      }).join("")}</div>`;
+  } catch (err) {
+    out.innerHTML = `<h2 class="section-title">트렌드 키워드</h2><div class="error">⚠ ${esc(err.message)}</div>`;
+  } finally { btn.disabled = false; }
+}
+$("#trendBtn").onclick = runTrend;
+$("#results").addEventListener("click", e => {
+  const kw = e.target.closest("[data-kw]");
+  if (!kw) return;
+  switchTab("keyword");
+  $("#q").value = kw.dataset.kw;
+  $("#region").value = $("#trendRegion").value;
+  $("#period").value = "7";
+  runSearch();
+});
+
+/* ================= navigation ================= */
+function switchTab(t) {
+  $$("#tabs button").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
+  $("#tab-keyword").hidden = t !== "keyword";
+  $("#tab-trend").hidden = t !== "trend";
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) switchTab(b.dataset.tab); });
+
+const TITLES = { search: "검색 엔진", saved: "저장한 영상", guide: "사용 가이드" };
+function showView(v) {
+  ["search", "saved", "guide"].forEach(x => $("#view-" + x).hidden = x !== v);
+  $$("[data-view]").forEach(b => b.classList.toggle("active", b.dataset.view === v));
+  $("#viewTitle").textContent = TITLES[v];
+  if (v === "saved") renderSaved();
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) showView(b.dataset.view); });
+
+// remember filters
+const FILTER_IDS = ["subs", "period", "dur", "region", "order", "ratioMin", "count", "translate", "trendRegion", "trendCat"];
+const savedF = store.get("filters", {});
+FILTER_IDS.forEach(id => {
+  const el = $("#" + id);
+  if (savedF[id] != null) { if (el.type === "checkbox") el.checked = savedF[id]; else el.value = savedF[id]; }
+  el.addEventListener("change", () => { savedF[id] = el.type === "checkbox" ? el.checked : el.value; store.set("filters", savedF); });
+});
+
+setTimeout(() => keys.length || toast("먼저 오른쪽 위 🔑 에서 YouTube API 키를 등록하세요"), 600);
+})();
+</script>
+</body>
+</html>
