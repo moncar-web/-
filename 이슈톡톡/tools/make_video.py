@@ -89,6 +89,46 @@ def split_sentences(text, max_len=34):
     return out
 
 
+def parse_srt(path):
+    text = Path(path).read_text(encoding="utf-8-sig")
+    cues = []
+    for block in re.split(r"\n\s*\n", text.replace("\r\n", "\n").strip()):
+        m = re.search(r"(\d+):(\d+):(\d+)[,.](\d+)\s*-->\s*(\d+):(\d+):(\d+)[,.](\d+)", block)
+        if not m:
+            continue
+        g = [int(x) for x in m.groups()]
+        st = g[0] * 3600 + g[1] * 60 + g[2] + g[3] / 1000
+        en = g[4] * 3600 + g[5] * 60 + g[6] + g[7] / 1000
+        body = " ".join(block[m.end():].strip().splitlines())
+        cues.append((st, en, body))
+    if not cues:
+        sys.exit(f"자막 파일에서 시간을 읽지 못했습니다: {path}")
+    return cues
+
+
+def align_to_srt(rows, cues):
+    """대본 글자 수 누적 비율을 자막 글자 수 누적 비율에 맞춰 이미지 경계 시각을 구함.
+    Vrew에서 문장을 조금 고쳤어도 전체 흐름으로 맞춰지도록 비율로 계산합니다."""
+    def n(s):
+        return len(re.sub(r"\s", "", s))
+    cue_chars = [max(n(c[2]), 1) for c in cues]
+    total_cue = sum(cue_chars)
+    total_script = sum(n(r["text"]) for r in rows) or 1
+    bounds, acc = [cues[0][0]], 0
+    for r in rows:
+        acc += n(r["text"])
+        target = acc / total_script * total_cue
+        run_c = 0
+        for (st, en, _), c in zip(cues, cue_chars):
+            if run_c + c >= target:
+                bounds.append(st + (en - st) * (target - run_c) / c)
+                break
+            run_c += c
+        else:
+            bounds.append(cues[-1][1])
+    return bounds
+
+
 def srt_time(t):
     ms = int(round(t * 1000))
     return f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d},{ms % 1000:03d}"
@@ -125,6 +165,8 @@ def main():
     ap.add_argument("--voice", default="ko-KR-SunHiNeural", help="ko-KR-SunHiNeural(여) / ko-KR-InJoonNeural(남)")
     ap.add_argument("--rate", default="-5%", help="말 빠르기 (예: -10%, +0%)")
     ap.add_argument("--audio", default=None, help="직접 만든 내레이션 파일")
+    ap.add_argument("--srt", default=None,
+                    help="--audio와 함께: Vrew 등에서 내보낸 자막 파일. 이 시간에 맞춰 이미지를 배치하고 이 자막을 그대로 씀")
     ap.add_argument("--channel", default="", help="대본의 [채널명] 자리에 넣을 이름")
     ap.add_argument("--pad", type=float, default=0.4, help="이미지마다 음성 뒤 쉬는 시간(초)")
     ap.add_argument("--fps", type=int, default=30)
@@ -135,10 +177,13 @@ def main():
     ap.add_argument("--crf", type=int, default=20, help="화질 (낮을수록 고화질, 18~23)")
     args = ap.parse_args()
 
-    rows = [r for r in load_rows(args.csv)
+    all_rows = load_rows(args.csv)
+    rows = [r for r in all_rows
             if r["n"] >= args.start and (args.end is None or r["n"] <= args.end)]
+    if (args.audio or args.srt) and args.start != 1:
+        sys.exit("--audio/--srt를 쓸 때는 1번부터 시작해야 음성과 맞습니다. (--end로 앞부분만 시험은 가능)")
     name = args.channel or "저희 채널"
-    for r in rows:
+    for r in all_rows:
         r["text"] = r["text"].replace("[채널명]", name)
         r["speak"] = r["text"]
 
@@ -158,6 +203,15 @@ def main():
         asyncio.run(tts_all(rows, work / "tts", args.voice, args.rate))
         for r in rows:
             r["dur"] = media_duration(work / "tts" / f"{r['n']:04d}.mp3") + args.pad
+    elif args.audio and args.srt:
+        # Vrew 등에서 내보낸 자막(SRT)의 시간에 맞춰 이미지 경계를 정함
+        cues = parse_srt(args.srt)
+        bounds = align_to_srt(all_rows, cues)  # 전체 대본 기준으로 맞춘 뒤 필요한 구간만 사용
+        bounds[0] = 0.0
+        if args.end is None:
+            bounds[-1] = max(bounds[-1], media_duration(args.audio))
+        for r, a, b in zip(rows, bounds, bounds[1:len(rows) + 1]):
+            r["dur"] = max(b - a, 0.5)
     elif args.audio:
         total = media_duration(args.audio)
         est = sum(r["sec"] for r in rows)
@@ -209,8 +263,15 @@ def main():
 
     # 5) 자막(SRT): 이미지 구간 안에서 문장 길이에 비례해 시간 배분
     srt_path = Path(args.out).with_suffix(".srt")
+    if args.srt:
+        # Vrew 자막 시간이 음성과 정확히 맞으므로 그대로 사용
+        if Path(args.srt).resolve() != srt_path.resolve():
+            shutil.copyfile(args.srt, srt_path)
+        rows_for_srt = []
+    else:
+        rows_for_srt = rows
     t, idx, lines = 0.0, 1, []
-    for r in rows:
+    for r in rows_for_srt:
         dur = r["frames"] / args.fps
         speak = dur - (args.pad if args.tts else 0)
         sents = split_sentences(r["text"])
@@ -222,7 +283,8 @@ def main():
             idx += 1
             st += d
         t += dur
-    srt_path.write_text("\n".join(lines), encoding="utf-8")
+    if rows_for_srt:
+        srt_path.write_text("\n".join(lines), encoding="utf-8")
 
     # 6) 최종 합치기
     print("④ 최종 영상 만드는 중... (길이에 따라 시간이 걸립니다)")
