@@ -1,0 +1,21 @@
+# 영상(모션) 생성 프롬프트 — 수정본 대본 기준, 이미지 프롬프트 1~10번용 (각 3~5초)
+
+1. [혹시 폐차장 가 보신 적 있으세요?] 4-second clip, Korean webtoon-style 2D cartoon animation. A middle-aged Korean man in a beige jacket stands at a scrapyard gate full of crushed cars; he turns his head toward the camera, raises one eyebrow and points back over his shoulder at the scrapyard. Dust drifts in warm late-afternoon backlight. Camera: slow push-in from medium shot to medium close-up. No text.
+
+2. [찌그러진 차들 사이로 은색 상자가 줄줄이 쌓여 있습니다.] 5-second clip, Korean webtoon-style 2D cartoon animation. Rows of silver EV battery packs stacked between dented cars in a scrapyard; floating dust particles glitter in golden-hour light and long shadows slowly stretch. Camera: high-angle slow pan from left to right across the stacks. No text.
+
+3. [전기차에서 뜯어낸 배터리예요. 다 쓴 겁니다.] 4-second clip, Korean webtoon-style 2D cartoon animation. Two Korean mechanics in grey overalls strain to lower a heavy used silver battery pack from under a white electric car on a lift onto a cart; the cart wheels roll a few centimeters. Bright fluorescent garage light. Camera: static low-angle medium shot with a slight handheld shake. No text.
+
+4. [그런데 올해 8월, 미국 정부가 이상한 명령을 하나 내렸어요.] 5-second clip, Korean webtoon-style 2D cartoon animation. A generic American government building with a large US flag at dusk; in the foreground a hand slams a heavy seal onto a glowing official order document on a desk, paper edges fluttering from the impact. Dramatic orange dusk light. Camera: low-angle slow push-in toward the document, a quick jolt on the stamp. No text.
+
+5. [이 배터리를 갈아서 만든 까만 가루,] 3-second clip, Korean webtoon-style 2D cartoon animation. A gloved hand lifts a scoop of fine black powder out of a shredded battery pack; the powder pours slowly from the scoop, glittering with tiny blue and silver metallic sparkles. Dramatic single spotlight. Camera: extreme close-up with a slow rack focus onto the falling powder. No text.
+
+6. [이걸 나라 밖으로 한 톨도 내보내지 말라. 이유가 뭐였는지 아세요?] 5-second clip, Korean webtoon-style 2D cartoon animation. At a US port, a giant steel gate slides shut across the pier in front of stacked black powder sacks, throwing sparks; a large red prohibition circle flashes on above the sacks. Harsh red warning light. Camera: eye-level wide shot with a fast push-in as the gate closes. No text.
+
+7. [국가안보입니다. 쓰레기가 국가안보가 된 거예요.] 4-second clip, Korean webtoon-style 2D cartoon animation. A dented trash can in the center morphs into a heavy steel vault door that swings shut, and two uniformed guards step in to stand at attention on either side. Cold blue light shifting to gold. Camera: low-angle slow orbit around the transforming trash can. No text.
+
+8. [유럽도 똑같은 문을 걸어 잠갔습니다. 그런데 더 이상한 게 있어요.] 5-second clip, Korean webtoon-style 2D cartoon animation. Beneath a blue flag with gold stars, heavy chains wrap around a harbor gate and a padlock snaps shut; in the foreground a Korean narrator man in a navy suit turns to the camera with wide, shocked eyes. Cool blue harbor light. Camera: rack focus from the chained gate to the man's face. No text.
+
+9. [그 사이에 미국을 대표하는 전기차 회사가 7년을 고민한] 4-second clip, Korean webtoon-style 2D cartoon animation. An executive in silhouette stands at the window of a sleek electric car factory while calendar pages fly off a wall calendar one after another beside him, seasons changing outside. Soft evening window light. Camera: slow dolly-in from behind the silhouette. No text.
+
+10. [끝에 다 쓴 배터리를 맡길 곳으로 한국 회사를 골랐습니다.] 4-second clip, Korean webtoon-style 2D cartoon animation. The silhouetted executive steps forward and firmly shakes hands with a Korean recycling engineer in a work jacket in front of stacked battery packs; a small Korean flag on the workbench flutters. Warm golden backlight. Camera: medium shot with a slow arc around the handshake. No text.
