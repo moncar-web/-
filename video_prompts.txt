@@ -1,0 +1,21 @@
+# 영상(모션) 생성 프롬프트 — 이미지 프롬프트 1~10번용 (각 3~5초)
+
+1. [혹시 폐차장 가 보신 적 있으세요?] 4-second clip, Korean webtoon-style 2D cartoon animation. A middle-aged Korean man in a beige jacket stands at a scrapyard gate full of crushed cars; he turns his head toward the camera, raises one eyebrow and points back over his shoulder at the scrapyard. Dust drifts in warm late-afternoon backlight. Camera: slow push-in from medium shot to medium close-up. No text.
+
+2. [찌그러진 차들 사이로 은색 상자가 줄줄이 쌓여 있습니다.] 5-second clip, Korean webtoon-style 2D cartoon animation. Rows of silver EV battery packs stacked between dented cars in a scrapyard; floating dust particles glitter in golden-hour light, long shadows slowly stretch. Camera: high-angle slow pan from left to right across the stacks. No text.
+
+3. [전기차에서 뜯어낸 배터리예요. 다 쓴 겁니다. 이제 차에 못 넣어요.] 5-second clip, Korean webtoon-style 2D cartoon animation. Two Korean mechanics in grey overalls strain to lower a heavy silver battery pack from under a white electric car on a lift onto a cart; the cart wheels roll a few centimeters. Bright fluorescent garage light. Camera: static low-angle medium shot with slight handheld shake. No text.
+
+4. [그런데 이 상자를 지금 미국과 유럽이 서로 달라고 합니다.] 4-second clip, Korean webtoon-style 2D cartoon animation. A Korean narrator man in a navy suit grabs his cheeks in shock; behind him a glowing world map lights up North America and Europe, with glowing arrows reaching toward a pile of silver batteries. Blue and orange rim light pulses. Camera: quick zoom-in on his face. No text.
+
+5. [그것도 한국 앞에 줄을 서서요. 다 쓴 배터리를 대체 누가 사냐고요?] 5-second clip, Korean webtoon-style 2D cartoon animation. A long queue of Western businessmen with briefcases shuffles forward in front of a small Korean warehouse with a Korean flag; men peek impatiently over each other's shoulders. Bright midday sun. Camera: slow crane-up from ground level to a high wide view of the long line. No text.
+
+6. [저도 똑같이 생각했습니다. 그런데 더 이상한 게 있어요.] 4-second clip, Korean webtoon-style 2D cartoon animation. A middle-aged Korean man in a cardigan at a laptop scratches his head; a cartoon question mark pops up above him and wobbles, then he leans forward with narrowed eyes. Cozy warm lamp light. Camera: static medium shot, then subtle push-in. No text.
+
+7. [우리나라는 리튬이 한 줌도 안 나는 나라입니다.] 4-second clip, Korean webtoon-style 2D cartoon animation. Over an old treasure-map style map of the Korean peninsula, a hand slowly opens its palm to reveal nothing inside; a tiny puff of dust blows away. Soft even studio light. Camera: top-down static shot with a gentle slow zoom-in on the empty palm. No text.
+
+8. [코발트도 니켈도 안 나와요.] 3-second clip, Korean webtoon-style 2D cartoon animation. Two empty wooden mineral crates marked only with blue and silver color bands sit on a bare warehouse floor; a spider web sways gently between them and a single dust mote falls. Cool dim window light. Camera: slow dolly-in at eye level. No text.
+
+9. [광산 하나 없는 나라가 어떻게 배터리 원료를 팔게 됐을까요?] 5-second clip, Korean webtoon-style 2D cartoon animation. A confused Korean worker in a hard hat holds a shiny jar of battery material on flat empty land, turning left and right searching for a mine that is not there; a big question mark bounces above him. Bright blue-sky daylight. Camera: low-angle slow 180-degree orbit around him. No text.
+
+10. [지금부터 천천히 풀어 드리겠습니다.] 4-second clip, Korean webtoon-style 2D cartoon animation. A friendly Korean narrator man in a navy suit at a wooden desk opens a thick storybook; soft golden light spills out of the pages onto his smiling face. Warm desk-lamp glow. Camera: slow push-in from medium shot toward the glowing book. No text.
