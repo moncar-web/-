@@ -23,7 +23,7 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_MD = HERE.parent / "4단계_이미지_영상_프롬프트_v2.md"
+DEFAULT_MD = HERE.parent / "4단계_이미지_영상_프롬프트_압축판.md"
 
 
 def load_prompts(md_path):
