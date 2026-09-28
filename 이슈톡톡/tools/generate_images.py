@@ -64,18 +64,50 @@ def main():
         return
 
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-    if not api_key:
-        sys.exit("GEMINI_API_KEY 환경 변수가 없습니다. 스크립트 맨 위 설명을 참고해 주세요.")
+    if api_key:
+        from google import genai
+        from google.genai import types
 
-    from google import genai
-    from google.genai import types
+        client = genai.Client(api_key=api_key)
+        config = types.GenerateImagesConfig(
+            number_of_images=1,
+            aspect_ratio=args.aspect,
+            person_generation="allow_all",  # 아이 등장 장면(꽃님이)이 있어 필요
+        )
 
-    client = genai.Client(api_key=api_key)
-    config = types.GenerateImagesConfig(
-        number_of_images=1,
-        aspect_ratio=args.aspect,
-        person_generation="allow_all",  # 아이 등장 장면(꽃님이)이 있어 필요
-    )
+        def generate(prompt):
+            resp = client.models.generate_images(model=args.model, prompt=prompt, config=config)
+            if not resp.generated_images:
+                raise RuntimeError("이미지가 비어 있음 (안전 필터에 걸렸을 수 있음)")
+            return resp.generated_images[0].image.image_bytes
+    else:
+        # 키가 환경 변수에 없을 때: Claude Code 클라우드 환경의 'API 자격 증명'이
+        # 요청에 x-goog-api-key 헤더를 자동으로 붙여 주는 경우를 위해 REST로 직접 호출
+        import base64
+        import json
+        import urllib.error
+        import urllib.request
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{args.model}:predict"
+
+        def generate(prompt):
+            body = json.dumps({
+                "instances": [{"prompt": prompt}],
+                "parameters": {"sampleCount": 1, "aspectRatio": args.aspect,
+                               "personGeneration": "allow_all"},
+            }).encode()
+            req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+            try:
+                with urllib.request.urlopen(req, timeout=120) as r:
+                    data = json.load(r)
+            except urllib.error.HTTPError as e:
+                raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:300]}")
+            preds = data.get("predictions") or []
+            if not preds or "bytesBase64Encoded" not in preds[0]:
+                raise RuntimeError(f"이미지가 비어 있음 (안전 필터에 걸렸을 수 있음): {str(data)[:200]}")
+            return base64.b64decode(preds[0]["bytesBase64Encoded"])
+
+        print("GEMINI_API_KEY가 없어 API 자격 증명(자동 헤더) 방식으로 호출합니다.")
 
     targets = [p for p in prompts
                if p[0] >= args.start and (args.end is None or p[0] <= args.end)]
@@ -86,10 +118,7 @@ def main():
             continue
         for attempt in range(1, args.retries + 1):
             try:
-                resp = client.models.generate_images(model=args.model, prompt=prompt, config=config)
-                if not resp.generated_images:
-                    raise RuntimeError("이미지가 비어 있음 (안전 필터에 걸렸을 수 있음)")
-                path.write_bytes(resp.generated_images[0].image.image_bytes)
+                path.write_bytes(generate(prompt))
                 print(f"[{i}/{len(targets)}] {path.name} 완료  {label[:30]}")
                 break
             except Exception as e:
