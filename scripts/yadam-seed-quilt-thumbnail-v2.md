@@ -9,7 +9,7 @@ Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, 
 No text, no letters, no watermark.
 ```
 
-## A안 (추천) — 이불 속에서 쏟아진 붉은 볍씨
+## A안 — 이불 속에서 쏟아진 붉은 볍씨 (스포일러 주의: 본편 클라이맥스)
 ```
 [공통 스타일 블록]
 Left: a 17-year-old young Joseon wife with a neat married bun and plain wooden binyeo, white cotton jeogori, kneeling, both hands holding open a cut old patched yellowish cotton quilt from which glowing red-awned rice seeds and golden husks pour out; her eyes wide with shock and tears on her cheeks.
@@ -27,12 +27,12 @@ Background: a huge zelkova tree at a sunny village entrance with thatched houses
 ```
 자막: **「지주가 발로 걷어찬 거지 혼수」** / **「이듬해 봄 무릎 꿇은 이유」** (핑크 강조: "무릎 꿇은")
 
-## C안 — 비단 대신 헌 이불을 내미는 어머니
+## C안 (추천) — 비단 대신 헌 이불을 내미는 어머니
 ```
 [공통 스타일 블록]
 Left: a 17-year-old Joseon girl with a long braid and red daenggi ribbon, shocked with tears welling, hands clasped at her chest.
 Right: a thin stern widowed mother in her early 50s with gray-streaked hair bun, deep wrinkles, faded indigo hanbok and a brass thimble on her finger, firmly holding out an old stained patched cotton quilt toward her daughter, unreadable sorrowful eyes.
-Background: the wooden maru of a mountain cottage, an empty open wall cabinet and drying mugwort under the eaves, bright morning light, softly blurred.
+Background: the wooden maru of a mountain cottage at golden dusk, mugwort drying under the eaves; in the blurred distance beyond the brushwood gate, a merchant walking away with an A-frame jige loaded with pink silk garments, a pink sleeve fluttering.
 ```
 자막: **「"이 이불은 봄까지 절대 뜯지 마라"」** / **「거지 혼수로 온 마을 살린 며느리」** (핑크 강조: "온 마을 살린")
 
