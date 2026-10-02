@@ -31,7 +31,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: under a huge zelkova tree at a village entrance, Yun Chambong (greedy landlord, 50s, plump face, narrow eyes, thin mustache, fur-trimmed silk vest or silk dopo, black gat) sits on a chair and kicks the quilt (an old faded yellowish cotton quilt with many patches and an old stain on one corner, secretly divided into small stitched square compartments) lying in the dirt with the tip of his shoe, sneering; villagers laugh behind him.
-Left side: a wide riverside village with willow trees and a long earthen embankment, late autumn light.
+Left side: a wide riverside village with willow trees and a low grassy earthen river dike only about twice a person's height, running along the riverbank behind the houses, late autumn light.
 No text, no letters, no watermark.
 ```
 
@@ -50,7 +50,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: the old peddler woman (60s, chatty, colorful bundle of trinkets on her back, hand fan) chatters on the edge of the maru; Makrye (Eunsil's widowed mother, early 50s, thin and stern, deep forehead lines, gray-streaked hair in a tight bun, faded indigo cotton hanbok, a worn brass thimble, fingertips dotted with dark needle marks) freezes with her needle held in mid-air, face suddenly grave; Eunsil (17-year-old unmarried Joseon girl, slender, gentle oval face, clear dark eyes, long single braid with a red daenggi ribbon, plain cotton hanbok, needle-callused fingertips) blushes behind the kitchen door.
-Left side: far away beyond the mountains, a big river with a low village and a long cracked embankment. Autumn colors.
+Left side: far away beyond the mountains, a big river with a low village and a low grassy earthen river dike only about twice a person's height, running along the riverbank. Autumn colors.
 No text, no letters, no watermark.
 ```
 
@@ -104,7 +104,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) kneels at the icy river washing a silk dopo, her hands red and swollen, and looks up in alarm.
-Left side: a large tiled granary right below an earthen embankment with a long diagonal crack, frozen white seepage like a white snake on it. Cold winter light.
+Left side: on dry flat ground just behind a low grassy earthen river dike only about twice a person's height, running along the riverbank, a large tiled-roof wooden granary stands safely; on the dike's slope a single thin diagonal crack about a meter long, with a little frozen white frost along the crack line. The river in front is frozen solid with snow on the ice; no flowing water, no waterfall, no flooding. Cold clear winter daylight.
 No text, no letters, no watermark.
 ```
 
@@ -112,7 +112,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: villagers line up with sacks of seed rice before the granary; Yun Chambong (greedy landlord, 50s, plump face, narrow eyes, thin mustache, fur-trimmed silk vest or silk dopo, black gat) sits with a ledger, laughing mockingly; Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) stands forward with clenched fists; the mother-in-law (late 40s, sharp eyes, thin lips, worn brown cotton hanbok, rough cracked hands) pulls her sleeve.
-Left side: the cracked embankment and frozen river behind the granary, gray sky.
+Left side: behind the granary, a low grassy earthen river dike only about twice a person's height, running along the riverbank with a thin diagonal crack on its slope, the river frozen solid; no waterfall, no flooding. Gray winter sky.
 No text, no letters, no watermark.
 ```
 
@@ -155,7 +155,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) wades through rising floodwater with the rolled-up quilt on her back; Deokbo (young farmer husband, early 20s, tall, sun-tanned, broad shoulders, gentle downcast eyes, patched hemp clothes, topknot sangtu) carries the mother-in-law (late 40s, sharp eyes, thin lips, worn brown cotton hanbok, rough cracked hands) on his back; Kkotbun (15-year-old sister-in-law, round cheeks, mischievous eyes, pigtail braid) screams.
-Left side: the embankment bursting at midnight, a huge wave of muddy water swallowing thatched houses and the granary, pouring rain and ice chunks. Epic.
+Left side: the low earthen river dike bursting open at midnight, a huge wave of muddy water swallowing thatched houses and the granary, pouring rain and ice chunks. Epic.
 No text, no letters, no watermark.
 ```
 
@@ -174,7 +174,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: an old farmer tears open a swollen sack; sprouted rotting seeds spill from his trembling hands; a woman with a baby on her back collapses crying.
-Left side: a mud-covered village after the water receded, broken embankment, gray sky.
+Left side: a mud-covered village after the water receded, a broken gap in the low earthen river dike, gray sky.
 No text, no letters, no watermark.
 ```
 
@@ -200,7 +200,7 @@ No text, no letters, no watermark.
 ### 21. 쏟아지는 붉은 볍씨 (클라이맥스)
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
-Right side: red-awned rice seeds and golden husks pour out of the cut quilt like a glowing waterfall; Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) gasps; the mother-in-law (late 40s, sharp eyes, thin lips, worn brown cotton hanbok, rough cracked hands), Kkotbun (15-year-old sister-in-law, round cheeks, mischievous eyes, pigtail braid) and Deokbo (young farmer husband, early 20s, tall, sun-tanned, broad shoulders, gentle downcast eyes, patched hemp clothes, topknot sangtu) freeze in astonishment.
+Right side: red-awned rice seeds and golden husks spill out of the cut quilt compartments in a thick stream onto the wooden floor, softly glowing in the lamplight; Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) gasps; the mother-in-law (late 40s, sharp eyes, thin lips, worn brown cotton hanbok, rough cracked hands), Kkotbun (15-year-old sister-in-law, round cheeks, mischievous eyes, pigtail braid) and Deokbo (young farmer husband, early 20s, tall, sun-tanned, broad shoulders, gentle downcast eyes, patched hemp clothes, topknot sangtu) freeze in astonishment.
 Left side: through the broken paper door, a flooded village at dawn with willows budding spring green. Warm lamplight versus cool dawn.
 No text, no letters, no watermark.
 ```
@@ -298,7 +298,7 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) and Deokbo (young farmer husband, early 20s, tall, sun-tanned, broad shoulders, gentle downcast eyes, patched hemp clothes, topknot sangtu) harvest red-awned rice with sickles, smiling; villagers bring bowls of seeds.
-Left side: a vast autumn field glowing red-gold like a sunset, a sturdy rebuilt embankment along the river.
+Left side: a vast autumn field of ripe rice with reddish-gold ears, a sturdy rebuilt low earthen river dike along the river.
 No text, no letters, no watermark.
 ```
 
@@ -306,14 +306,14 @@ No text, no letters, no watermark.
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
 Right side: aged Makrye (Eunsil's widowed mother, early 50s, thin and stern, deep forehead lines, gray-streaked hair in a tight bun, faded indigo cotton hanbok, a worn brass thimble, fingertips dotted with dark needle marks) sits barefoot on the ridge of a freshly flooded paddy, dipping her swollen feet in the water, laughing and crying at once, planting a single rice seedling; Deokbo (young farmer husband, early 20s, tall, sun-tanned, broad shoulders, gentle downcast eyes, patched hemp clothes, topknot sangtu) kneels beside her; Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips) holds a bundle of seedlings.
-Left side: the wide riverside fields of Beodeul village in spring, sky reflected in the paddies, the new embankment. Luminous, emotional.
+Left side: the wide riverside fields of Beodeul village in spring, sky reflected in the paddies, the rebuilt low earthen river dike. Luminous, emotional.
 No text, no letters, no watermark.
 ```
 
 ### 34. 둑 위 양지의 무덤
 ```
 Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail. 16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
-Right side: Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips), now in her 30s, places a handful of red seeds before a grass-covered grave mound on the sunny embankment.
+Right side: Eunsil (17-year-old young wife, slender, gentle oval face, clear dark eyes, neat married bun with a plain wooden binyeo, plain white cotton jeogori and gray skirt, needle-callused fingertips), now in her 30s, places a handful of red seeds before a grass-covered grave mound on a sunny grassy slope above the river dike.
 Left side: overlooking the third paddy and the river at dawn, spring seedlings. Serene, reverent.
 No text, no letters, no watermark.
 ```
