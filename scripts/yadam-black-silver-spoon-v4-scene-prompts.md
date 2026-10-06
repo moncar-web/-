@@ -28,7 +28,7 @@ Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, 
 
 ---
 
-## 1. 썸네일
+## 1. 썸네일 (구버전 — `yadam-black-silver-spoon-v4-thumbnails.md`의 4종을 쓰세요)
 
 ### 썸네일 A (메인, 첫 장면)
 **자막**
