@@ -663,3 +663,35 @@ Right side: Yeoni at about 60, a gentle elderly Korean woman, kind wrinkled roun
 Left side: a low stone bridge over a frozen stream, heavy snowfall, warm lantern light, the same composition as the first meeting.
 Mystical, warm and dramatic mood. No text, no letters, no watermark. Use the attached image as the character reference.
 ```
+
+---
+
+## 4. 추가 컷 (4장 개정분: 편끼리의 싸움과 말없는 화해)
+4장 "손톱의 흰 줄"(21번)과 "대드는 아이"(22번) 사이에 넣으세요. 22번 컷 대신 아래 두 번째 컷을 써도 됩니다.
+
+### 추가 1. [4장] 놀림받는 아이
+```
+Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail.
+16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
+Right side: Yeoni, a 10-year-old Korean beggar girl, small and thin, round face lightly smudged with dirt, large bright mischievous dark eyes, black hair in a single low braid tied with a faded red ribbon, patched rough undyed hemp jeogori and faded gray skirt, worn straw shoes sits alone on an empty straw mat stall, staring at her worn straw shoes with a torn toe, while market children stick out their tongues and run off laughing.
+Left side: market street in late afternoon light, villagers deliberately walking past the stall.
+Mystical, warm and dramatic mood. No text, no letters, no watermark. Use the attached image as the character reference.
+```
+
+### 추가 2. [4장] 던져진 짚신
+```
+Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail.
+16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
+Right side: Yeoni, a 10-year-old Korean beggar girl, small and thin, round face lightly smudged with dirt, large bright mischievous dark eyes, black hair in a single low braid tied with a faded red ribbon, patched rough undyed hemp jeogori and faded gray skirt, worn straw shoes flings her worn straw shoes out the hut door into the snow, shouting through tears; Old Heo, a 65-year-old Korean face-reader, tall gaunt frame slightly hunched, long thin stern face with deep wrinkles, sunken sharp eyes, sparse long gray beard, gray topknot under a worn frayed black gat hat, faded indigo-gray patched dopo robe, the fingertips of his left hand stained dark gray-black, thin bony hands lies with his back turned, shoulders stiff.
+Left side: a hut doorway at night, warm lamplight spilling onto a snowy yard.
+Mystical, warm and dramatic mood. No text, no letters, no watermark. Use the attached image as the character reference.
+```
+
+### 추가 3. [4장] 고쳐진 짚신
+```
+Semi-realistic Korean webtoon digital illustration, Joseon Dynasty 1700s-1800s, soft painterly rendering with smooth 3D-like shading, vivid saturated colors, bright clear natural daylight (warm glowing lamplight for night scenes, never murky or dark), clean crisp line art, highly detailed hanbok fabric and hanok background textures, large expressive faces with strong readable emotions, elderly characters with detailed wrinkles and gray hair buns, warm and dramatic mood, high quality, maximum detail.
+16:9 composition, medium shot with characters large in frame (waist-up or knee-up); characters' central axis shifted 30% to the right; the left side shows the landscape/background, slightly soft-focused.
+Right side: Yeoni, a 10-year-old Korean beggar girl, small and thin, round face lightly smudged with dirt, large bright mischievous dark eyes, black hair in a single low braid tied with a faded red ribbon, patched rough undyed hemp jeogori and faded gray skirt, worn straw shoes, barefoot at dawn, holds up a pair of straw shoes freshly mended with new golden straw at the toe and a newly twisted strap, a warm rice ball inside; behind her in the hut, Old Heo, a 65-year-old Korean face-reader, tall gaunt frame slightly hunched, long thin stern face with deep wrinkles, sunken sharp eyes, sparse long gray beard, gray topknot under a worn frayed black gat hat, faded indigo-gray patched dopo robe, the fingertips of his left hand stained dark gray-black, thin bony hands lies with his back turned, bits of straw stuck to his dark fingertips.
+Left side: a snowy hut doorstep at sunrise, soft pink light.
+Mystical, warm and dramatic mood. No text, no letters, no watermark. Use the attached image as the character reference.
+```
